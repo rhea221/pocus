@@ -7,7 +7,8 @@ import Image from 'next/image'
 export default function Login() {
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
-  const [active, setActive] = useState<'input' | 'button' | null>(null)
+  const [focused, setFocused] = useState<'input' | null>(null)
+  const [hovered, setHovered] = useState<'button' | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -26,11 +27,13 @@ export default function Login() {
   }
 
   const Wing = ({ src }: { src: string }) => (
-  <Image src={src} width={30} height={30} alt=""
-    style={{ objectFit: 'contain', flexShrink: 0, width: 'auto', height: '30px' }} />
+    <Image src={src} width={30} height={30} alt=""
+      style={{ objectFit: 'contain', flexShrink: 0, width: 'auto', height: '30px' }} />
   )
-
   const Placeholder = () => <div style={{ width: 30, height: 30, flexShrink: 0 }} />
+
+  const showBlue = focused === 'input'
+  const showPink = hovered === 'button'
 
   return (
     <>
@@ -44,6 +47,15 @@ export default function Login() {
           color: #00BDFC; padding: 0 20px; text-align: center;
         }
         .email-input::placeholder { color: #00BDFC; opacity: 0.7; }
+        .send-btn {
+          transition: transform 0.15s ease;
+        }
+        .send-btn:hover {
+          transform: scale(1.07);
+        }
+        .send-btn:active {
+          transform: scale(0.97);
+        }
       `}</style>
 
       <main style={{
@@ -71,8 +83,7 @@ export default function Login() {
           <>
             {/* input row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              {active === 'input' ? <Wing src="/blueangelL.png" /> : <Placeholder />}
-
+              {showBlue ? <Wing src="/blueangelL.png" /> : <Placeholder />}
               <div style={{
                 width: 289, height: 52, borderRadius: 80,
                 border: '1.5px solid #00BDFC', background: '#E0F7FF',
@@ -90,29 +101,28 @@ export default function Login() {
                     value={email}
                     placeholder="enter email for link"
                     onChange={e => setEmail(e.target.value)}
-                    onFocus={() => setActive('input')}
-                    onBlur={() => setActive(null)}
+                    onFocus={() => setFocused('input')}
+                    onBlur={() => setFocused(null)}
                     onKeyDown={e => e.key === 'Enter' && handleLogin()}
                   />
                 </div>
               </div>
-
-              {active === 'input' ? <Wing src="/blueangelR.png" /> : <Placeholder />}
+              {showBlue ? <Wing src="/blueangelR.png" /> : <Placeholder />}
             </div>
 
             {/* button row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              {active === 'button' ? <Wing src="/pinkangelL.png" /> : <Placeholder />}
-
+              {showPink ? <Wing src="/pinkangelL.png" /> : <Placeholder />}
               <div
+                className="send-btn"
                 onClick={handleLogin}
-                onMouseEnter={() => setActive('button')}
-                onMouseLeave={() => setActive(null)}
+                onMouseEnter={() => setHovered('button')}
+                onMouseLeave={() => setHovered(null)}
                 style={{
                   width: 116, height: 52, borderRadius: 80,
                   border: '1.5px solid #FF39EF', background: '#F9D6FF',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', position: 'relative'
+                  cursor: 'pointer'
                 }}>
                 <div style={{
                   width: 106, height: 44, borderRadius: 80,
@@ -121,19 +131,16 @@ export default function Login() {
                   position: 'relative', overflow: 'hidden',
                   display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}>
-                  {/* shine — 9 from outer top = 5 from inner top, 16 from outer left = 11 from inner left */}
                   <div style={{
                     position: 'absolute', top: 5, left: 11,
                     width: 82, height: 12, borderRadius: 80,
                     background: '#EB79FF', opacity: 0.6
                   }} />
-                  {/* dot 6×6 — 36 from outer top = 32 from inner top, 23 from outer left = 18 from inner left */}
                   <div style={{
                     position: 'absolute', top: 32, left: 18,
                     width: 6, height: 6, borderRadius: '50%',
                     background: 'white', opacity: 0.5
                   }} />
-                  {/* dot 3×3 — 34 from outer top = 30 from inner top, 17 from outer left = 12 from inner left */}
                   <div style={{
                     position: 'absolute', top: 30, left: 12,
                     width: 3, height: 3, borderRadius: '50%',
@@ -145,8 +152,7 @@ export default function Login() {
                   }}>send</span>
                 </div>
               </div>
-
-              {active === 'button' ? <Wing src="/pinkangelR.png" /> : <Placeholder />}
+              {showPink ? <Wing src="/pinkangelR.png" /> : <Placeholder />}
             </div>
           </>
         )}
