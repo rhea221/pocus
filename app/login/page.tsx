@@ -46,16 +46,11 @@ export default function Login() {
           font-family: 'VCR', monospace; font-size: 20px;
           color: #00BDFC; padding: 0 20px; text-align: center;
         }
-        .email-input::placeholder { color: #00BDFC; opacity: 0.7; }
-        .send-btn {
-          transition: transform 0.15s ease;
-        }
-        .send-btn:hover {
-          transform: scale(1.07);
-        }
-        .send-btn:active {
-          transform: scale(0.97);
-        }
+        .email-input::placeholder { color: #00BDFC; opacity: 0.7; transition: opacity 0.1s; }
+        .email-input:focus::placeholder { opacity: 0; }
+        .send-btn { transition: transform 0.15s ease; }
+        .send-btn:hover { transform: scale(1.07); }
+        .send-btn:active { transform: scale(0.97); }
       `}</style>
 
       <main style={{
@@ -113,43 +108,45 @@ export default function Login() {
             {/* button row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               {showPink ? <Wing src="/pinkangelL.png" /> : <Placeholder />}
-              <div
-                className="send-btn"
-                onClick={handleLogin}
-                onMouseEnter={() => setHovered('button')}
-                onMouseLeave={() => setHovered(null)}
-                style={{
-                  width: 116, height: 52, borderRadius: 80,
-                  border: '1.5px solid #FF39EF', background: '#F9D6FF',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer'
-                }}>
-                <div style={{
-                  width: 106, height: 44, borderRadius: 80,
-                  border: '1.5px solid #fff',
-                  background: 'linear-gradient(180deg, #D500FC 0%, #F9D6FF 100%)',
-                  position: 'relative', overflow: 'hidden',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}>
+              <div style={{ width: 130, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div
+                  className="send-btn"
+                  onClick={handleLogin}
+                  onMouseEnter={() => setHovered('button')}
+                  onMouseLeave={() => setHovered(null)}
+                  style={{
+                    width: 116, height: 52, borderRadius: 80,
+                    border: '1.5px solid #FF39EF', background: '#F9D6FF',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    cursor: 'pointer'
+                  }}>
                   <div style={{
-                    position: 'absolute', top: 5, left: 11,
-                    width: 82, height: 12, borderRadius: 80,
-                    background: '#EB79FF', opacity: 0.6
-                  }} />
-                  <div style={{
-                    position: 'absolute', top: 32, left: 18,
-                    width: 6, height: 6, borderRadius: '50%',
-                    background: 'white', opacity: 0.5
-                  }} />
-                  <div style={{
-                    position: 'absolute', top: 30, left: 12,
-                    width: 3, height: 3, borderRadius: '50%',
-                    background: 'white', opacity: 0.5
-                  }} />
-                  <span style={{
-                    fontFamily: "'VCR', monospace", fontSize: 20,
-                    color: 'white', position: 'relative', zIndex: 1
-                  }}>send</span>
+                    width: 106, height: 44, borderRadius: 80,
+                    border: '1.5px solid #fff',
+                    background: 'linear-gradient(180deg, #D500FC 0%, #F9D6FF 100%)',
+                    position: 'relative', overflow: 'hidden',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    <div style={{
+                      position: 'absolute', top: 5, left: 11,
+                      width: 82, height: 12, borderRadius: 80,
+                      background: '#EB79FF', opacity: 0.6
+                    }} />
+                    <div style={{
+                      position: 'absolute', top: 32, left: 18,
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: 'white', opacity: 0.5
+                    }} />
+                    <div style={{
+                      position: 'absolute', top: 30, left: 12,
+                      width: 3, height: 3, borderRadius: '50%',
+                      background: 'white', opacity: 0.5
+                    }} />
+                    <span style={{
+                      fontFamily: "'VCR', monospace", fontSize: 20,
+                      color: 'white', position: 'relative', zIndex: 1
+                    }}>send</span>
+                  </div>
                 </div>
               </div>
               {showPink ? <Wing src="/pinkangelR.png" /> : <Placeholder />}
