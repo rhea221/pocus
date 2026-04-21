@@ -2,38 +2,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
-
-function Wing({ flip = false }: { flip?: boolean }) {
-  return (
-    <svg width="28" height="24" viewBox="0 0 28 24" fill="none"
-      style={{ transform: flip ? 'scaleX(-1)' : 'none', flexShrink: 0 }}>
-      <path d="M4,12 Q6,4 14,7 Q9,9 11,14 Q6,17 4,12Z"
-        stroke="#a8d8ea" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M11,14 Q13,19 18,17 Q15,14 13,12"
-        stroke="#a8d8ea" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M14,7 Q20,3 22,8 Q18,8 16,11"
-        stroke="#a8d8ea" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  )
-}
-
-function CatSVG() {
-  return (
-    <svg width="110" height="90" viewBox="0 0 110 90" fill="none"
-      stroke="#E8705A" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="44" cy="46" r="22"/>
-      <path d="M28,28 L32,18 L38,28"/>
-      <path d="M50,28 L54,18 L60,28"/>
-      <circle cx="36" cy="42" r="7"/>
-      <circle cx="52" cy="42" r="7"/>
-      <path d="M44,52 L44,54"/>
-      <path d="M65,38 Q72,30 78,24"/>
-      <path d="M78,24 Q83,19 87,21 Q85,26 80,28 Q75,30 72,27"/>
-      <path d="M34,66 L32,76"/>
-      <path d="M54,66 L56,76"/>
-    </svg>
-  )
-}
+import Image from 'next/image'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -56,94 +25,128 @@ export default function Login() {
     setSent(true)
   }
 
-  const inputStyle: React.CSSProperties = {
-    fontFamily: "'VT323', monospace",
-    fontSize: '17px',
-    letterSpacing: '1px',
-    padding: '10px 22px',
-    border: '2px solid #a8d8ea',
-    borderRadius: '999px',
-    background: active === 'input' ? '#e4f4fb' : '#d6eef9',
-    outline: 'none',
-    width: '280px',
-    color: '#5ab0d0',
-    transition: 'background 0.15s',
-  }
+  const Wing = ({ src }: { src: string }) => (
+    <Image src={src} width={30} height={30} alt=""
+      style={{ objectFit: 'contain', flexShrink: 0 }} />
+  )
 
-  const buttonStyle: React.CSSProperties = {
-    fontFamily: "'VT323', monospace",
-    fontSize: '17px',
-    letterSpacing: '1px',
-    padding: '10px 36px',
-    border: 'none',
-    borderRadius: '999px',
-    background: 'linear-gradient(135deg, #d8a8f0 0%, #f06fcd 100%)',
-    color: 'white',
-    cursor: 'pointer',
-    transition: 'opacity 0.15s',
-  }
+  const Placeholder = () => <div style={{ width: 30, height: 30, flexShrink: 0 }} />
 
   return (
     <>
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: white; }
+        .email-input {
+          width: 100%; height: 100%;
+          background: transparent; border: none; outline: none;
+          font-family: 'VCR', monospace; font-size: 20px;
+          color: #00BDFC; padding: 0 20px; text-align: center;
+        }
+        .email-input::placeholder { color: #00BDFC; opacity: 0.7; }
       `}</style>
 
       <main style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center',
-        justifyContent: 'center', minHeight: '100vh', gap: '14px'
+        justifyContent: 'center', minHeight: '100vh', gap: '16px'
       }}>
+
         <h1 style={{
-          fontFamily: "'IM Fell English', serif",
-          fontSize: '52px',
-          color: '#222',
-          letterSpacing: '2px',
-          marginBottom: '6px'
-        }}>
-          pocus
-        </h1>
+          fontFamily: "'Miraero', serif",
+          fontSize: '64px', fontWeight: 500, color: '#1E1E1E',
+          marginBottom: '4px'
+        }}>pocus</h1>
 
         {sent ? (
-          <>
-            <p style={{ fontFamily: "'VT323', monospace", fontSize: '18px', color: '#aaa', letterSpacing: '1px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+            <p style={{ fontFamily: "'VCR', monospace", fontSize: '18px', color: '#aaa', letterSpacing: '1px' }}>
               nice
             </p>
-            <CatSVG />
-            <p style={{ fontFamily: "'VT323', monospace", fontSize: '17px', color: '#aaa', letterSpacing: '1px' }}>
+            <Image src="/cat.png" width={90} height={90} alt="pocus cat" />
+            <p style={{ fontFamily: "'VCR', monospace", fontSize: '17px', color: '#aaa', letterSpacing: '1px' }}>
               check ur email now
             </p>
-          </>
+          </div>
         ) : (
           <>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              {active === 'input' && <Wing />}
-              <input
-                type="email"
-                value={email}
-                placeholder="enter email for link"
-                onChange={e => setEmail(e.target.value)}
-                onFocus={() => setActive('input')}
-                onBlur={() => setActive(null)}
-                onKeyDown={e => e.key === 'Enter' && handleLogin()}
-                style={inputStyle}
-              />
-              {active === 'input' && <Wing flip />}
+            {/* input row */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              {active === 'input' ? <Wing src="/blueangelL.png" /> : <Placeholder />}
+
+              <div style={{
+                width: 289, height: 52, borderRadius: 80,
+                border: '1.5px solid #00BDFC', background: '#E0F7FF',
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+                <div style={{
+                  width: 279, height: 44, borderRadius: 80,
+                  border: '1.5px solid #fff',
+                  background: 'linear-gradient(180deg, #9BE6FF 0%, #DEF7FF 100%)',
+                  display: 'flex', alignItems: 'center',
+                }}>
+                  <input
+                    className="email-input"
+                    type="email"
+                    value={email}
+                    placeholder="enter email for link"
+                    onChange={e => setEmail(e.target.value)}
+                    onFocus={() => setActive('input')}
+                    onBlur={() => setActive(null)}
+                    onKeyDown={e => e.key === 'Enter' && handleLogin()}
+                  />
+                </div>
+              </div>
+
+              {active === 'input' ? <Wing src="/blueangelR.png" /> : <Placeholder />}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              {active === 'button' && <Wing />}
-              <button
+            {/* button row */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              {active === 'button' ? <Wing src="/pinkangelL.png" /> : <Placeholder />}
+
+              <div
                 onClick={handleLogin}
                 onMouseEnter={() => setActive('button')}
                 onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive('button')}
-                onBlur={() => setActive(null)}
-                style={buttonStyle}
-              >
-                send
-              </button>
-              {active === 'button' && <Wing flip />}
+                style={{
+                  width: 116, height: 52, borderRadius: 80,
+                  border: '1.5px solid #FF39EF', background: '#F9D6FF',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', position: 'relative'
+                }}>
+                <div style={{
+                  width: 106, height: 44, borderRadius: 80,
+                  border: '1.5px solid #fff',
+                  background: 'linear-gradient(180deg, #D500FC 0%, #F9D6FF 100%)',
+                  position: 'relative', overflow: 'hidden',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  {/* shine — 9 from outer top = 5 from inner top, 16 from outer left = 11 from inner left */}
+                  <div style={{
+                    position: 'absolute', top: 5, left: 11,
+                    width: 82, height: 12, borderRadius: 80,
+                    background: '#EB79FF', opacity: 0.6
+                  }} />
+                  {/* dot 6×6 — 36 from outer top = 32 from inner top, 23 from outer left = 18 from inner left */}
+                  <div style={{
+                    position: 'absolute', top: 32, left: 18,
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: 'white', opacity: 0.5
+                  }} />
+                  {/* dot 3×3 — 34 from outer top = 30 from inner top, 17 from outer left = 12 from inner left */}
+                  <div style={{
+                    position: 'absolute', top: 30, left: 12,
+                    width: 3, height: 3, borderRadius: '50%',
+                    background: 'white', opacity: 0.5
+                  }} />
+                  <span style={{
+                    fontFamily: "'VCR', monospace", fontSize: 20,
+                    color: 'white', position: 'relative', zIndex: 1
+                  }}>send</span>
+                </div>
+              </div>
+
+              {active === 'button' ? <Wing src="/pinkangelR.png" /> : <Placeholder />}
             </div>
           </>
         )}
