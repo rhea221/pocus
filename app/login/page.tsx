@@ -151,11 +151,3 @@ export default function Login() {
     </>
   )
 }
-
-# sign out 
-<button onClick={async () => {
-  await supabase.auth.signOut()
-  router.push('/login')
-}}>
-  sign out
-</button>
