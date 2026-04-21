@@ -26,8 +26,8 @@ export default function Login() {
   }
 
   const Wing = ({ src }: { src: string }) => (
-    <Image src={src} width={30} height={30} alt=""
-      style={{ objectFit: 'contain', flexShrink: 0 }} />
+  <Image src={src} width={30} height={30} alt=""
+    style={{ objectFit: 'contain', flexShrink: 0, width: 'auto', height: '30px' }} />
   )
 
   const Placeholder = () => <div style={{ width: 30, height: 30, flexShrink: 0 }} />
