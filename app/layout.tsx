@@ -1,14 +1,19 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
 
-export const metadata: Metadata = { title: 'pocus' }
+export const metadata: Metadata = {
+  title: "Rhea Park — Product Designer",
+  description: "Product designer based in London. MEng Design Engineering, Imperial College London.",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <head>
-      </head>
       <body>{children}</body>
     </html>
-  )
+  );
 }
